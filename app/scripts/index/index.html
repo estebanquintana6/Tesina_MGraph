@@ -1,0 +1,31 @@
+<header class="masthead bg-primary text-white text-center">
+  <div class="container">
+    <img class="img-fluid mb-5 d-block mx-auto" src="assets/img/logo.png" alt="" width="40%">
+    <h1 class="text-uppercase mb-0">{{appName}}</h1>
+    <hr class="star-light">
+    <h2 class="font-weight-light mb-0">Mosquito grapher tool</h2>
+    <br>
+    <input type="file" id="filepicker" name="fileList" webkitdirectory multiple />
+    <br>
+    <button class="btn btn-secondary" type="submit" ng-click="start_app()" data-dismiss="modal">Start to graph</button>
+
+  </div>
+</header>
+
+<div class="copyright py-4 text-center text-white">
+  <div class="container">
+    <small>Copyright &copy; 2018</small>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="wrapper">
+      <form class="form-signin">
+        <h5 class="form-signin-heading">Insert csv folder location</h5>
+        <br>
+        <br>
+        <p>{{errorMessage}}</p>
+      </form>
+    </div>
+</div>

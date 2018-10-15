@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>MGraph</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- build:css assets/css/app.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/login.css" />
+
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="assets/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="assets/css/freelancer.min.css" />
+
+
+    <!-- endbuild -->
+</head>
+<body>
+    <ng-view></ng-view>
+    <!-- build:js scripts/vendor.js -->
+    <!-- Bootstrap core JavaScript -->
+    <!-- Plugin JavaScript -->
+    <script>
+        window.jQuery = window.$ = require('jquery');
+    </script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>    <script src="vendor/freelancer.min.js"></script>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src='./bower_components/angular-file-model/angular-file-model.js'></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../bower_components/angular-material/angular-material.js"></script>
+    <!-- build:app scripts/app.js -->
+    <script src="./scripts/app.js"></script>
+    <!-- endbuild -->
+    <script src="./scripts/index/customerController.js"></script>
+    <script src="./scripts/menu/menuController.js"></script>
+    <!-- endbuild -->
+</body>
+<footer>
+
+</footer>
+</html>
