@@ -13,6 +13,7 @@
 
       $scope.parsedFiles = [];
       $scope.time = 0;
+      var spaceCircles = [30, 70, 110, 160];
 
       $scope.logout = function(){
         $location.path('/');
@@ -48,18 +49,23 @@
          hue: 'green'
       });
 
+      var svgContainer = d3.select("#pies").append("svg")
+                                          .attr("width", "100%")
+                                          .attr("height", "100%")
+                                          .style("border", "1px solid black");
+
       var arc = d3.svg.arc().outerRadius(r)
 
       var pie = d3.layout.pie()
           .value(function(d) { return d; })
           .sort(null);
 
-      var svg = d3.select("#pies").selectAll("svg")
+      var svg = svgContainer.selectAll("svg")
           .data(data)
-      	.enter()
+      	   .enter()
       		.append("svg")
-      		.attr("width", (r + m) * 2)
-      		.attr("height", (r + m) * 2)
+      		.attr("width", "100%")
+      		.attr("height", "100%")
       		.attr("id", function(d,i) {return 'pie'+i;})
       		.append("svg:g")
       			.attr("transform", "translate(" + (r + m) + "," + (r + m) + ")");
@@ -90,6 +96,7 @@
       	// Update the Pie charts with random data
       	var newdata = getDataInTime($scope.time);
         $scope.time = $scope.time + 1;
+        $scope.$apply();
       	for(var x in newdata) {
       		var npath = d3.select("#pie"+x).selectAll("path").data(pie(newdata[x]))
       		npath.transition().duration(1000).attrTween("d", arcTween); // redraw the arcs
@@ -105,7 +112,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + i + '</th><td>' + result[i] + '</td></tr>';
+          tdata += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + i + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
         }
 
         tdata += '</tbody></table>';

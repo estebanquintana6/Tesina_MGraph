@@ -20,12 +20,16 @@
     <h5 class="text-center">{{work_folder}}</h5>
     <hr class="star-light mb-5">
     <div class="row">
-      <label for="range">Time</label>
+      <label for="range">Time: </label>
+      <input type="number" ng-model="time" />
+      <br>
     </div>
     <div class="row">
-      <div id="pies" class="col-8"></div>
-      <div id="pieData" class="col-4">Data</div>
-
+      <input style="width: 100%" type="range" name="range" ng-model="time" min="0"  max="{{maxTime}}">
+    </div>
+    <div class="row">
+      <div id="pies" class="col-10"></div>
+      <div id="pieData" class="col-2">Data</div>
     </div>
   </div>
 </section>
