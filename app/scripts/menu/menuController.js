@@ -45,13 +45,12 @@
           r = 30;
 
       var mycolors = randomColor({
-         count: 100,
-         hue: 'green'
+         count: 100
       });
 
       var svgContainer = d3.select("#pies").append("svg")
                                           .attr("width", "100%")
-                                          .attr("height", "100%")
+                                          .attr("height", 800)
                                           .style("border", "1px solid black");
 
       var arc = d3.svg.arc().outerRadius(r)
@@ -68,7 +67,15 @@
       		.attr("height", "100%")
       		.attr("id", function(d,i) {return 'pie'+i;})
       		.append("svg:g")
-      			.attr("transform", "translate(" + (r + m) + "," + (r + m) + ")");
+      			.attr("transform", function(d,i) {
+              var s = "translate(";
+              console.log($rootScope.coorData[i]);
+              s+= $rootScope.coorData[i]["x"];
+              s+= ",";
+              s+= $rootScope.coorData[i]["y"];
+              s+=")";
+              return s;
+            });
 
       var path = svg.selectAll("path")
           .data(pie)
@@ -118,17 +125,8 @@
         tdata += '</tbody></table>';
 
         $('#pieData').html(tdata)
-          // temp, print new array to screen
-          /*;
-          for(var x in newdata) {
 
-          }
-
-
-
-          tdata += "<strong>"+colSum+":</strong> " + "<br>";
-
-          */
+        //tdata += "<strong>"+colSum+":</strong> " + "<br>";
       }
 
       function arcTween(a) {
