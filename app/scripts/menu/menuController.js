@@ -42,7 +42,7 @@
       // ------------
 
       var m = 5,
-          r = 30;
+          r = 20;
 
       var mycolors = randomColor({
          count: 100
@@ -119,7 +119,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + i + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
+          tdata += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
         }
 
         tdata += '</tbody></table>';

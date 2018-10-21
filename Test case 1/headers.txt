@@ -1,0 +1,1 @@
+['WW', 'WH', 'WR', 'WB', 'HH', 'HR', 'HB', 'RR', 'RB', 'BB']

@@ -12,16 +12,64 @@
       $rootScope.data = [];
 
       $scope.start_app = function() {
-        $rootScope.work_folder = document.getElementById("filepicker").files[0].path;
-        $rootScope.coordinate_file = document.getElementById("filecoor").files[0].path;
-
-        readFiles();
-
         getJsonData(fillData);
         readCoordinates();
         console.log($rootScope.work_folder);
         console.log($rootScope.data);
+      }
 
+      $scope.getFileDetails = function (e) {
+          $scope.files = [];
+          $scope.$apply(function () {
+
+              // STORE THE FILE OBJECT IN AN ARRAY.
+              for (var i = 0; i < e.files.length; i++) {
+                  $scope.files.push(e.files[i].path)
+              }
+
+          });
+
+          $rootScope.work_folder = require('path').dirname($scope.files[0]);
+          console.log($rootScope.work_folder);
+
+          console.log($scope.files);
+
+          var spawn = require("child_process").spawn;
+
+          var py = spawn('python',["parseFiles.py",
+                                  $scope.files]);
+
+          var dataString = '';
+
+          py.stdout.on('data', function(data){
+            dataString += data.toString();
+          });
+
+          py.stdout.on('end', function(){
+            console.log('Ended');
+          });
+
+          py.stdin.end();
+      };
+
+      $scope.getCoorDetails = function(e){
+          $rootScope.coordinate_file = document.getElementById("filecoor").files[0].path;
+          var spawn = require("child_process").spawn;
+
+          var py = spawn('python',["parseCoors.py",
+                                  $rootScope.coordinate_file,
+                                  $rootScope.work_folder]);
+          var dataString = '';
+
+          py.stdout.on('data', function(data){
+            dataString += data.toString();
+          });
+
+          py.stdout.on('end', function(){
+            console.log('Ended');
+          });
+
+          py.stdin.end();
       }
 
       function getJsonData(_callback){
@@ -49,28 +97,10 @@
 
       function readCoordinates(){
           var coor_path = $rootScope.work_folder + "\\mapped_coordinates.json";
+          var headers = $rootScope.work_folder + "\\headers.json";
           $rootScope.coorData = require(coor_path);
+          $rootScope.headers = require(headers);
           console.log($rootScope.coorData);
-      }
-
-      function readFiles() {
-        var spawn = require("child_process").spawn;
-
-        var py = spawn('python',["parse.py",
-                                $rootScope.work_folder,
-                                $rootScope.coordinate_file]);
-        var dataString = '';
-
-        py.stdout.on('data', function(data){
-          dataString += data.toString();
-        });
-
-        py.stdout.on('end', function(){
-          console.log('Ended');
-        });
-
-        py.stdin.end();
-
       }
 
       function fillData() {
