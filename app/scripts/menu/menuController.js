@@ -1,22 +1,42 @@
   (function () {
     'use strict';
     angular.module('app')
-        .controller('menuController', ['$scope', '$rootScope', '$location','$q', '$http', '$mdDialog','$interval', MenuController]);
+        .controller('menuController', ['$scope', '$rootScope', '$location','$q', '$http', '$mdDialog','$interval', '$timeout', MenuController]);
 
-    function MenuController($scope, $rootScope, $location, $q, $http, $mdDialog, $interval) {
+    function MenuController($scope, $rootScope, $location, $q, $http, $mdDialog, $interval,$timeout) {
 
       var d3 = require("d3");
       var randomColor = require('randomcolor');
-
       $scope.appName = "MGraph";
       console.log($rootScope.work_folder);
 
+      $scope.pause = false;
+      $scope.status = "Pause";
       $scope.parsedFiles = [];
       $scope.time = 0;
-      var spaceCircles = [30, 70, 110, 160];
+      var stop;
 
       $scope.logout = function(){
+        $interval.cancel(stop);
+        stop = undefined;
+        mycolors = null;
+        $rootScope.pieData = null;
+        $rootScope.coorData = null;
+        $rootScope.headers = null;
+        $rootScope.maxTime = 0;
+        $rootScope.work_folder = null;
+        $scope.parsedFiles = [];
+        $rootScope.data = [];
         $location.path('/');
+      }
+
+      $scope.stop = function(){
+          $scope.pause = !$scope.pause;
+          if($scope.pause == true){
+              $scope.status = "Play";
+          } else {
+              $scope.status = "Pause";
+          }
       }
 
       var data = $rootScope.data;
@@ -41,8 +61,8 @@
 
       // ------------
 
-      var m = 5,
-          r = 20;
+      var m = 5;
+      $scope.radio = 20;
 
       var mycolors = randomColor({
          count: 100
@@ -51,9 +71,13 @@
       var svgContainer = d3.select("#pies").append("svg")
                                           .attr("width", "100%")
                                           .attr("height", 800)
-                                          .style("border", "1px solid black");
+                                          .style("border", "1px solid black")
+                                          .style("background-color", "white");
 
-      var arc = d3.svg.arc().outerRadius(r)
+      var arc =  d3.svg.arc().outerRadius($scope.radio)
+      $interval(function() {
+          arc =  d3.svg.arc().outerRadius($scope.radio)
+      },500);
 
       var pie = d3.layout.pie()
           .value(function(d) { return d; })
@@ -94,16 +118,17 @@
 
       // -- Do the updates
       //------------------------
-      setInterval(function() {
-        change();
-      }, 1000);
+        stop = $interval(function() {
+            change();
+        }, 1000);
 
 
       function change() {
       	// Update the Pie charts with random data
       	var newdata = getDataInTime($scope.time);
-        $scope.time = $scope.time + 1;
-        $scope.$apply();
+        if($scope.pause == false){
+          $scope.time = $scope.time + 1;
+        }
       	for(var x in newdata) {
       		var npath = d3.select("#pie"+x).selectAll("path").data(pie(newdata[x]))
       		npath.transition().duration(1000).attrTween("d", arcTween); // redraw the arcs
@@ -136,6 +161,10 @@
           return arc(i(t));
         };
       }
+      //
+      //
+      //
+      // Starting the line graph section
 
     }
 })();

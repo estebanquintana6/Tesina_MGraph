@@ -1,39 +1,34 @@
 (function () {
     'use strict';
     angular.module('app')
-        .controller('customerController', ['$scope', '$rootScope','$location', '$q', '$http', '$mdDialog', CustomerController]);
+        .controller('customerController', ['$scope', '$rootScope','$location', '$q', '$http', '$mdDialog', '$timeout', CustomerController]);
 
-    function CustomerController($scope, $rootScope, $location, $q, $http, $mdDialog) {
+    function CustomerController($scope, $rootScope, $location, $q, $http, $mdDialog, $timeout) {
 
       $scope.appName = "MGraph";
       $rootScope.work_folder = "";
       $rootScope.maxTime = 0;
-
+      $rootScope.pieData = [];
       $rootScope.data = [];
 
       $scope.start_app = function() {
-        getJsonData(fillData);
         readCoordinates();
-        console.log($rootScope.work_folder);
-        console.log($rootScope.data);
+        fillData();
       }
 
       $scope.getFileDetails = function (e) {
           $scope.files = [];
           $scope.$apply(function () {
-
               // STORE THE FILE OBJECT IN AN ARRAY.
               for (var i = 0; i < e.files.length; i++) {
                   $scope.files.push(e.files[i].path)
               }
 
+              $scope.files = $scope.files.sort();
+              console.log($scope.files);
           });
 
           $rootScope.work_folder = require('path').dirname($scope.files[0]);
-          console.log($rootScope.work_folder);
-
-          console.log($scope.files);
-
           var spawn = require("child_process").spawn;
 
           var py = spawn('python',["parseFiles.py",
@@ -45,11 +40,11 @@
             dataString += data.toString();
           });
 
-          py.stdout.on('end', function(){
-            console.log('Ended');
-          });
 
           py.stdin.end();
+
+          $timeout(function(){getJsonData();},500);
+
       };
 
       $scope.getCoorDetails = function(e){
@@ -65,34 +60,28 @@
             dataString += data.toString();
           });
 
-          py.stdout.on('end', function(){
-            console.log('Ended');
-          });
-
           py.stdin.end();
       }
 
-      function getJsonData(_callback){
+      function getJsonData(){
         var path = require('path'), fs=require('fs');
         var startPath = $rootScope.work_folder;
-        var results = [];
 
         var files=fs.readdirSync(startPath);
+        console.log(files);
+        var txts = [];
         for(var i=0;i<files.length;i++){
           var filename=path.join(startPath,files[i]);
           var stat = fs.lstatSync(filename);
           if (filename.indexOf('.txt')>=0) {
+              txts.push(filename);
               console.log('-- found: ',filename);
               fs.readFile(filename, 'utf8', function(err, data) {
                   if (err) throw err;
-
-                  results.push(JSON.parse("[" + data + "]"));
+                  $rootScope.pieData.push(JSON.parse("[" + data + "]"));
               });
           }
         }
-        $rootScope.pieData = results;
-
-        setTimeout(function(){ _callback() }, 1000);
       }
 
       function readCoordinates(){
@@ -111,7 +100,6 @@
         }
         $rootScope.data = d;
         $rootScope.maxTime = $rootScope.pieData[0].length;
-        console.log($rootScope.data);
         $location.path('/menu');
       }
 

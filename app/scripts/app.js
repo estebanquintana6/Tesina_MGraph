@@ -13,12 +13,12 @@
             $routeProvider.when('/', {
                 templateUrl: _templateBase + '/index/index.html' ,
                 controller: 'customerController',
-                controllerAs: '_ctrl'
+                controllerAs: '_ctrl1'
             });
             $routeProvider.when('/menu', {
                 templateUrl: _templateBase + '/menu/menu.html' ,
                 controller: 'menuController',
-                controllerAs: '_ctrl'
+                controllerAs: '_ctrl2'
             });
             $routeProvider.otherwise({ redirectTo: '/' });
         }

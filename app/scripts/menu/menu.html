@@ -12,16 +12,25 @@
 </nav>
 
 <!-- About Section -->
-<section class="mb-0" id="about">
+<section class="bg-secondary text-white mb-0" id="about">
   <div class="container" style="
     padding-top: 2%;
     ">
     <h2 class="text-center text-uppercase">Available files in: </h2>
     <h5 class="text-center">{{work_folder}}</h5>
-    <hr class="star-dark mb-5">
+    <hr class="star-light mb-5">
     <div class="row">
-      <label for="range">Time: </label>
-      <input type="number" ng-model="time" />
+      <div class="col-3">
+        <label for="range">Time: </label>
+        <input type="number" ng-model="time" />
+      </div>
+      <div class="col-3">
+        <label for="range">Radio: </label>
+        <input type="number" ng-model="radio" />
+      </div>
+      <div class="col-3">
+        <button ng-click="stop()">{{status}}</button>
+      </div>
       <br>
     </div>
     <div class="row">
@@ -34,12 +43,13 @@
   </div>
 </section>
 
-<!-- Portfolio Grid Section -->
+<!-- Portfolio Grid Section
 <section class="portfolio" id="portfolio">
   <div class="container">
+    <div id="lineGraph" class="col-6"></div>
   </div>
 </section>
-<!-- Footer -->
+-->
 <div class="copyright py-4 text-center text-white">
   <div class="container">
     <small>Copyright &copy; Your Website 2018</small>
