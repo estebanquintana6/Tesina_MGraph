@@ -53,9 +53,6 @@
             tdata.push($rootScope.pieData[i][t]);
           }
 
-
-
-          console.log(tdata);
           return tdata;
       }
 
@@ -85,7 +82,7 @@
 
       var svg = svgContainer.selectAll("svg")
           .data(data)
-      	   .enter()
+      	  .enter()
       		.append("svg")
       		.attr("width", "100%")
       		.attr("height", "100%")
@@ -99,6 +96,12 @@
               s+= $rootScope.coorData[i]["y"];
               s+=")";
               return s;
+            })
+            .on("mouseover", function (d, i) {
+              console.log($rootScope.pieData[i][$scope.time]);
+            })
+            .on("mouseout", function () {
+
             });
 
       var path = svg.selectAll("path")

@@ -40,7 +40,6 @@
             dataString += data.toString();
           });
 
-
           py.stdin.end();
 
           $timeout(function(){getJsonData();},500);
@@ -71,17 +70,19 @@
         console.log(files);
         var txts = [];
         for(var i=0;i<files.length;i++){
-          var filename=path.join(startPath,files[i]);
-          var stat = fs.lstatSync(filename);
-          if (filename.indexOf('.txt')>=0) {
-              txts.push(filename);
-              console.log('-- found: ',filename);
-              fs.readFile(filename, 'utf8', function(err, data) {
+          var fn=path.join(startPath,files[i]);
+          var stat = fs.lstatSync(fn);
+          if (fn.indexOf('.txt')>=0) {
+              txts.push(fn);
+              fs.readFile(fn, 'utf8', function(err, data) {
                   if (err) throw err;
                   $rootScope.pieData.push(JSON.parse("[" + data + "]"));
               });
           }
         }
+
+        console.log($rootScope.pieData);
+
       }
 
       function readCoordinates(){
@@ -99,7 +100,7 @@
           d.push($rootScope.pieData[i][0]);
         }
         $rootScope.data = d;
-        $rootScope.maxTime = $rootScope.pieData[0].length;
+        $rootScope.maxTime = $rootScope.pieData[0].length - 1;
         $location.path('/menu');
       }
 
