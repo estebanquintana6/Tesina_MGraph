@@ -65,23 +65,18 @@
       function getJsonData(){
         var path = require('path'), fs=require('fs');
         var startPath = $rootScope.work_folder;
-
-        var files=fs.readdirSync(startPath);
-        console.log(files);
         var txts = [];
-        for(var i=0;i<files.length;i++){
-          var fn=path.join(startPath,files[i]);
-          var stat = fs.lstatSync(fn);
-          if (fn.indexOf('.txt')>=0) {
-              txts.push(fn);
-              fs.readFile(fn, 'utf8', function(err, data) {
-                  if (err) throw err;
-                  $rootScope.pieData.push(JSON.parse("[" + data + "]"));
-              });
-          }
+
+        var matrix = startPath + '\\matrix.json';
+
+        var pieData = require(matrix);
+
+        for( var p in pieData){
+          console.log(pieData[p]);
+          $rootScope.pieData.push(pieData[p]);
         }
 
-        console.log($rootScope.pieData);
+        $timeout(function(){console.log($rootScope.pieData)},1000);
 
       }
 
