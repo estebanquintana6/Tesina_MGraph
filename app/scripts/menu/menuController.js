@@ -15,6 +15,7 @@
       $scope.parsedFiles = [];
       $scope.time = 0;
       var stop;
+      var pieT;
 
       $scope.logout = function(){
         $interval.cancel(stop);
@@ -54,6 +55,20 @@
           }
 
           return tdata;
+      }
+
+      function getTimePie(i) {
+          var d = $rootScope.pieData[i][$scope.time];
+
+          var table = '<table class="table"><tbody>';
+
+          for(var i = 0; i<d.length; i++){
+            table += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
+          }
+
+          table += '</tbody></table>';
+
+          $('#tooltip').html(table)
       }
 
       // ------------
@@ -98,10 +113,17 @@
               return s;
             })
             .on("mouseover", function (d, i) {
-              console.log($rootScope.pieData[i][$scope.time]);
+                pieT = $interval(function() {
+                  d3.select("#tooltip")
+                    .style("opacity", 1);
+
+                  getTimePie(i);
+                }, 500);
             })
             .on("mouseout", function () {
-
+              d3.select("#tooltip")
+                .style("opacity", 0);
+                $interval.cancel(pieT);
             });
 
       var path = svg.selectAll("path")
@@ -121,9 +143,11 @@
 
       // -- Do the updates
       //------------------------
-        stop = $interval(function() {
-            change();
-        }, 1000);
+      stop = $interval(function() {
+          change();
+      }, 1000);
+
+
 
 
       function change() {
