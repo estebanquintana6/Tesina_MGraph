@@ -3,11 +3,20 @@
     <img class="img-fluid mb-5 d-block mx-auto" src="assets/img/logo.png" alt="" width="30%">
     <h1 class="text-uppercase mb-0">{{appName}}</h1>
     <hr class="star-light">
-    <h2 class="font-weight-light mb-0">Mosquito grapher tool</h2>
+    <h2 class="font-weight-light mb-0">Gene drive release in spacially located mosquito populations grapher</h2>
     <br>
-    <input type="file" id="csvFiles" name="csvFiles" multiple onchange="angular.element(this).scope().getFileDetails(this)" accept=".csv"/>
-    <br>
-    <input type="file" id="filecoor" multiple onchange="angular.element(this).scope().getCoorDetails(this)" accept=".csv"/>
+    <div class="row">
+      <div class="col-2 offset-4">
+        <h6>Gene drive files</h6>
+      </div>
+      <input type="file" id="csvFiles" name="csvFiles" multiple onchange="angular.element(this).scope().getFileDetails(this)" accept=".csv"/>
+    </div>
+    <div class="row">
+      <div class="col-2 offset-4">
+        <h6>Coordinates file</h6>
+      </div>
+      <input type="file" id="filecoor" multiple onchange="angular.element(this).scope().getCoorDetails(this)" accept=".csv"/>
+    </div>
     <br>
     <button class="btn btn-secondary" type="submit" ng-click="start_app()" data-dismiss="modal">Start to graph</button>
   </div>

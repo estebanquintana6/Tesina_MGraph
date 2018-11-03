@@ -13,8 +13,8 @@
 
 <!-- About Section -->
 <section class="bg-secondary text-white mb-0" id="about">
-  <div class="container" style="
-    padding-top: 2%;
+    <div class="container" style="
+      padding-top: 2%;
     ">
     <h2 class="text-center text-uppercase">Available files in: </h2>
     <h5 class="text-center">{{work_folder}}</h5>
@@ -36,10 +36,10 @@
     <div class="row">
       <input style="width: 100%" type="range" name="range" ng-model="time" min="0"  max="{{maxTime}}">
     </div>
-    <div class="row">
-      <div id="tooltip" class="hidden col-2"></div>
+    <div class="row" style="padding-top: 1%">
+      <div id="tooltip" class="hidden col-2 table-wrapper-scroll-y"></div>
       <div id="pies" class="col-8"></div>
-      <div id="pieData" class="col-2">Data</div>
+      <div id="pieData" class="col-2 table-wrapper-scroll-y">Data</div>
     </div>
   </div>
 </section>

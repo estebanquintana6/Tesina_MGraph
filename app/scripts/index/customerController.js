@@ -72,7 +72,6 @@
         var pieData = require(matrix);
 
         for( var p in pieData){
-          console.log(pieData[p]);
           $rootScope.pieData.push(pieData[p]);
         }
 

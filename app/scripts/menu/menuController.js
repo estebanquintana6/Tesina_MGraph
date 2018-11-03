@@ -57,13 +57,13 @@
           return tdata;
       }
 
-      function getTimePie(i) {
-          var d = $rootScope.pieData[i][$scope.time];
+      function getTimePie() {
+          var d = $rootScope.pieData[$scope.selectedPie][$scope.time];
 
-          var table = '<table class="table"><tbody>';
+          var table = '<h6>Population node: ' + $scope.selectedPie + '</h6><table class="table"><tbody>';
 
           for(var i = 0; i<d.length; i++){
-            table += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
+            table += '<tr><th scope="row" width="50px" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
           }
 
           table += '</tbody></table>';
@@ -113,17 +113,12 @@
               return s;
             })
             .on("mouseover", function (d, i) {
-                pieT = $interval(function() {
-                  d3.select("#tooltip")
-                    .style("opacity", 1);
-
-                  getTimePie(i);
-                }, 500);
+                $scope.selectedPie = i;
             })
             .on("mouseout", function () {
-              d3.select("#tooltip")
+              /*d3.select("#tooltip")
                 .style("opacity", 0);
-                $interval.cancel(pieT);
+                $interval.cancel(pieT);*/
             });
 
       var path = svg.selectAll("path")
@@ -161,7 +156,7 @@
       		npath.transition().duration(1000).attrTween("d", arcTween); // redraw the arcs
       	}
 
-        var tdata = '<table class="table"><tbody>'
+        var tdata = '<h5>Genotypes</h5><table class="table"><tbody>'
 
         var result = newdata.reduce(function (r, a) {
             a.forEach(function (b, i) {
@@ -171,7 +166,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
+          tdata += '<tr><th scope="row" width="50px" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
         }
 
         tdata += '</tbody></table>';
@@ -192,6 +187,10 @@
       //
       //
       // Starting the line graph section
-
+      pieT = $interval(function() {
+        d3.select("#tooltip")
+          .style("opacity", 1);
+        getTimePie();
+      }, 500);
     }
 })();
