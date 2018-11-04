@@ -6,7 +6,6 @@
     function MenuController($scope, $rootScope, $location, $q, $http, $mdDialog, $interval,$timeout) {
 
       var d3 = require("d3");
-      var randomColor = require('randomcolor');
       $scope.appName = "MGraph";
       console.log($rootScope.work_folder);
 
@@ -19,8 +18,8 @@
 
       $scope.logout = function(){
         $interval.cancel(stop);
+        $interval.cancel(pieT);
         stop = undefined;
-        mycolors = null;
         $rootScope.pieData = null;
         $rootScope.coorData = null;
         $rootScope.headers = null;
@@ -63,7 +62,7 @@
           var table = '<h6>Population node: ' + ($scope.selectedPie + 1) + '</h6><table class="table"><tbody>';
 
           for(var i = 0; i<d.length; i++){
-            table += '<tr><th scope="row" width="50px" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
+            table += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
           }
 
           table += '</tbody></table>';
@@ -76,9 +75,6 @@
       var m = 5;
       $scope.radio = 20;
 
-      var mycolors = randomColor({
-         count: 100
-      });
 
       var svgContainer = d3.select("#pies").append("svg")
                                           .attr("width", "100%")
@@ -119,7 +115,7 @@
             .on("mouseout", function () {
               /*d3.select("#tooltip")
                 .style("opacity", 0);
-                $interval.cancel(pieT);*/
+                */
             });
 
       var path = svg.selectAll("path")
@@ -127,7 +123,7 @@
       	.enter()
       		.append("svg:path")
       		.attr("d", arc)
-      		.style("fill", function(d, i) { return mycolors[i]; })
+      		.style("fill", function(d, i) { return  $rootScope.mycolors[i]; })
               .each(function(d) { this._current = d; }); // store the initial angles
 
       var titles = svg.append("svg:text")
@@ -167,7 +163,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" width="50px" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
+          tdata += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
         }
 
         tdata += '</tbody></table>';

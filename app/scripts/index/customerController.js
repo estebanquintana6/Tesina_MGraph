@@ -4,12 +4,14 @@
         .controller('customerController', ['$scope', '$rootScope','$location', '$q', '$http', '$mdDialog', '$timeout', CustomerController]);
 
     function CustomerController($scope, $rootScope, $location, $q, $http, $mdDialog, $timeout) {
+      var randomColor = require('randomcolor');
 
       $scope.appName = "MGraph";
       $rootScope.work_folder = "";
       $rootScope.maxTime = 0;
       $rootScope.pieData = [];
       $rootScope.data = [];
+      $rootScope.mycolors = require('./colors.json');
 
       $scope.start_app = function() {
         readCoordinates();
