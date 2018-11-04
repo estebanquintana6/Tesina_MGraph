@@ -62,7 +62,7 @@
           var table = '<h6>Population node: ' + ($scope.selectedPie + 1) + '</h6><table class="table"><tbody>';
 
           for(var i = 0; i<d.length; i++){
-            table += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
+            table += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[$rootScope.clusters[$scope.selectedPie]][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
           }
 
           table += '</tbody></table>';
@@ -118,12 +118,21 @@
                 */
             });
 
+      var node = 0;
+
       var path = svg.selectAll("path")
           .data(pie)
       	.enter()
       		.append("svg:path")
+          .attr("n", function(d, i) { return i;})
       		.attr("d", arc)
-      		.style("fill", function(d, i) { return  $rootScope.mycolors[i]; })
+      		.style("fill", function(d, i) {
+            var cluster = $rootScope.clusters[node];
+            if(i == ($rootScope.pieData[0][0].length - 1)){
+              node = node + 1;
+            }
+            console.log(cluster);
+            return $rootScope.mycolors[cluster][i]; })
               .each(function(d) { this._current = d; }); // store the initial angles
 
       var titles = svg.append("svg:text")
@@ -163,7 +172,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
+          tdata += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[$rootScope.clusters[i]][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
         }
 
         tdata += '</tbody></table>';

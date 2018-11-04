@@ -11,11 +11,16 @@
       $rootScope.maxTime = 0;
       $rootScope.pieData = [];
       $rootScope.data = [];
-      $rootScope.mycolors = require('./colors.json');
+      $rootScope.mycolors = require('./color.json');
+      $scope.clusterNumber = 1;
 
       $scope.start_app = function() {
-        readCoordinates();
-        fillData();
+        $timeout(function () {
+          var clusters = $rootScope.work_folder + '/cluster_info.json';
+          $rootScope.clusters = require(clusters);
+          readCoordinates();
+          fillData();
+        },5000);
       }
 
       $scope.getFileDetails = function (e) {
@@ -54,7 +59,8 @@
 
           var py = spawn('python',["parseCoors.py",
                                   $rootScope.coordinate_file,
-                                  $rootScope.work_folder]);
+                                  $rootScope.work_folder,
+                                  $scope.clusterNumber]);
           var dataString = '';
 
           py.stdout.on('data', function(data){

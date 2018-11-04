@@ -48,8 +48,7 @@ def get_coordiates(file):
         for row in itercsv:
             c = {
                 "x": float(row[0]),
-                "y": float(row[1]),
-                "population": labels[i]
+                "y": float(row[1])
             }
             i = i+1
             coordinates.append(c)

@@ -1,6 +1,6 @@
 <header class="masthead bg-primary text-white text-center">
   <div class="container">
-    <img class="img-fluid mb-5 d-block mx-auto" src="assets/img/logo.png" alt="" width="30%">
+    <img class="img-fluid mb-5 d-block mx-auto" src="assets/img/logo.png" alt="" width="25%">
     <h1 class="text-uppercase mb-0">{{appName}}</h1>
     <hr class="star-light">
     <h2 class="font-weight-light mb-0">Gene drive release in spacially located mosquito populations grapher</h2>
@@ -16,14 +16,13 @@
         <h6>Coordinates file</h6>
       </div>
       <input type="file" id="filecoor" multiple onchange="angular.element(this).scope().getCoorDetails(this)" accept=".csv"/>
+      <br>
     </div>
+    <br>
+    <label for="clusters">(Optional) Numbers of poblations: </label>
+    <input type="number" ng-model="clusterNumber" id="clusters" onchange="angular.element(this).scope().getCoorDetails(this)"/>
+    <br>
     <br>
     <button class="btn btn-secondary" type="submit" ng-click="start_app()" data-dismiss="modal">Start to graph</button>
   </div>
 </header>
-
-<div class="copyright py-4 text-center text-white">
-  <div class="container">
-    <small>Copyright &copy; 2018</small>
-  </div>
-</div>
