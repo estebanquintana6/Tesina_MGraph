@@ -11,6 +11,9 @@
 
       $scope.pause = false;
       $scope.status = "Pause";
+
+      var alleles = 'H: Homing allele\nW: Wild-type allele\nB: Resistant allele\nR: Resistant allele';
+
       $scope.parsedFiles = [];
       $scope.time = 0;
       var stop;
@@ -173,7 +176,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[$rootScope.clusters[i]][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr>';
+          tdata += '<tr><th title="' + alleles + '" scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[$rootScope.clusters[i]][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr></div>';
         }
 
         tdata += '</tbody></table>';
