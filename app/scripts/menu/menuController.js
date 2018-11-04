@@ -60,7 +60,7 @@
       function getTimePie() {
           var d = $rootScope.pieData[$scope.selectedPie][$scope.time];
 
-          var table = '<h6>Population node: ' + $scope.selectedPie + '</h6><table class="table"><tbody>';
+          var table = '<h6>Population node: ' + ($scope.selectedPie + 1) + '</h6><table class="table"><tbody>';
 
           for(var i = 0; i<d.length; i++){
             table += '<tr><th scope="row" width="50px" bgcolor="' + mycolors[i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(d[i] * 100) / 100 + '</td></tr>';
@@ -86,10 +86,11 @@
                                           .style("border", "1px solid black")
                                           .style("background-color", "white");
 
-      var arc =  d3.svg.arc().outerRadius($scope.radio)
-      $interval(function() {
-          arc =  d3.svg.arc().outerRadius($scope.radio)
-      },500);
+      var arc =  d3.svg.arc().outerRadius($scope.radio);
+
+      $scope.updateRadius = function(){
+        arc =  d3.svg.arc().outerRadius($scope.radio)
+      }
 
       var pie = d3.layout.pie()
           .value(function(d) { return d; })
@@ -131,7 +132,7 @@
 
       var titles = svg.append("svg:text")
       	.attr("class", "title")
-      	.text(function(d,i) {return i;})
+      	.text(function(d,i) {return i+1;})
       	.attr("dy", "5px")
       	.attr("text-anchor", "middle")
 

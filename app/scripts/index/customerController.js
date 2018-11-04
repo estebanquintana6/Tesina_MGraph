@@ -67,7 +67,7 @@
         var startPath = $rootScope.work_folder;
         var txts = [];
 
-        var matrix = startPath + '\\matrix.json';
+        var matrix = startPath + '/matrix.json';
 
         var pieData = require(matrix);
 
@@ -80,8 +80,8 @@
       }
 
       function readCoordinates(){
-          var coor_path = $rootScope.work_folder + "\\mapped_coordinates.json";
-          var headers = $rootScope.work_folder + "\\headers.json";
+          var coor_path = $rootScope.work_folder + "/mapped_coordinates.json";
+          var headers = $rootScope.work_folder + "/headers.json";
           $rootScope.coorData = require(coor_path);
           $rootScope.headers = require(headers);
           console.log($rootScope.coorData);
