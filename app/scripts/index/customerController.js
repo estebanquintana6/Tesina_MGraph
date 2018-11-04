@@ -1,9 +1,9 @@
 (function () {
     'use strict';
     angular.module('app')
-        .controller('customerController', ['$scope', '$rootScope','$location', '$q', '$http', '$mdDialog', '$timeout', CustomerController]);
+        .controller('customerController', ['$scope', '$rootScope','$location', '$q', '$http', '$mdDialog', '$timeout','$interval', CustomerController]);
 
-    function CustomerController($scope, $rootScope, $location, $q, $http, $mdDialog, $timeout) {
+    function CustomerController($scope, $rootScope, $location, $q, $http, $mdDialog, $timeout, $interval) {
       var randomColor = require('randomcolor');
 
       $scope.appName = "MGraph";
@@ -13,11 +13,11 @@
       $rootScope.data = [];
       $rootScope.mycolors = require('./color.json');
       $scope.clusterNumber = 1;
+      var clusterInterval;
 
       $scope.start_app = function() {
         $timeout(function () {
-          var clusters = $rootScope.work_folder + '/cluster_info.json';
-          $rootScope.clusters = require(clusters);
+          $interval.cancel(clusterInterval);
           readCoordinates();
           fillData();
         },5000);
@@ -59,8 +59,7 @@
 
           var py = spawn('python',["parseCoors.py",
                                   $rootScope.coordinate_file,
-                                  $rootScope.work_folder,
-                                  $scope.clusterNumber]);
+                                  $rootScope.work_folder]);
           var dataString = '';
 
           py.stdout.on('data', function(data){
@@ -68,7 +67,37 @@
           });
 
           py.stdin.end();
+
+          $scope.getClusters();
       }
+
+      $scope.getClusters = function(){
+        var cno = document.getElementById("clusters").value;
+        console.log(cno);
+        var spawn = require("child_process").spawn;
+        var fs = require('fs');
+
+        var py = spawn('python',["get_clusters.py",
+                                $rootScope.coordinate_file,
+                                $rootScope.work_folder,
+                                cno]);
+
+        var clusterData = '';
+        py.stdout.on('data', function(data) {
+            //Here is where the output goes
+        });
+
+
+        py.stdin.end();
+
+        var clusters = $rootScope.work_folder + '/cluster_info.json';
+        var obj = JSON.parse(fs.readFileSync(clusters, 'utf8'));
+
+        $rootScope.clusters = obj;
+
+      }
+
+      clusterInterval = $interval($scope.getClusters, 500);
 
       function getJsonData(){
         var path = require('path'), fs=require('fs');

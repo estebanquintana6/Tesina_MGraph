@@ -25,6 +25,7 @@
         $rootScope.headers = null;
         $rootScope.maxTime = 0;
         $rootScope.work_folder = null;
+        $rootScope.clusters = null;
         $scope.parsedFiles = [];
         $rootScope.data = [];
         $location.path('/');
