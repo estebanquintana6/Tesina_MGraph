@@ -5,6 +5,9 @@
     <hr class="star-light">
     <h2 class="font-weight-light mb-0">Gene drive release in spacially located mosquito populations grapher</h2>
     <br>
+    <div style="padding-bottom: 2%">
+      <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Generate new colors</button>
+    </div>
     <div class="row">
       <div class="col-2 offset-4">
         <h6>Gene drive files</h6>
@@ -23,6 +26,82 @@
     <input type="number" ng-model="clusterNumber" id="clusters" onchange="angular.element(this).scope().getClusters()"/>
     <br>
     <br>
-    <button class="btn btn-secondary" type="submit" ng-click="start_app()" data-dismiss="modal">Start to graph</button>
+    <div>
+      <button class="btn btn-secondary" type="submit" ng-click="start_app()" data-dismiss="modal">Start to graph</button>
+    </div>
   </div>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">About</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <form>
+                  <div class="form-row align-items-center">
+                  <div class="col-2 my-1">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Cluster: </label>
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" ng-model="selectedRow">
+                      <option value="0">1</option>
+                      <option value="1">2</option>
+                      <option value="2">3</option>
+                      <option value="3">4</option>
+                      <option value="4">5</option>
+                      <option value="5">6</option>
+                      <option value="6">7</option>
+                      <option value="7">8</option>
+                    </select>
+                  </div>
+                  <div class="col-2 my-1">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Color: </label>
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" ng-model="selectedColor">
+                      <option value="" selected>Random</option>
+                      <option value="red">red</option>
+                      <option value="orange">orange</option>
+                      <option value="yellow">yellow</option>
+                      <option value="green">green</option>
+                      <option value="blue">blue</option>
+                      <option value="purple">purple</option>
+                      <option value="pink">pink</option>
+                    </select>
+                  </div>
+                  <div class="col-2 my-1" style="padding-top: 4%">
+                    <button class="btn btn-primary" ng-click="generateMatrix()">Generate</button>
+                  </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                  <h6>Current colors: (Columns = Node colors) (Rows = Cluster)</h6>
+                  <style>
+                      th {
+                        width: 10vh;
+                        height: 1vh;
+                      }
+                  </style>
+                  <table>
+                    <tr ng-repeat="m in mycolors">
+                        <th ng-repeat="n in m" bgcolor="{{n}}"></th>
+                    </tr>
+                  </table>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

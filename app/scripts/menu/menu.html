@@ -2,9 +2,17 @@
 <nav class="navbar navbar-expand-xs bg-primary fixed-top text-uppercase" id="mainNav">
   <div class="container">
     <div class="col-10"></div>
-
-    <div class="col-2">
-    <button ng-click="logout()" class="navbar-toggler navbar-toggler-right text-uppercase bg-secondary text-white rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="col-1">
+      <button class="navbar-toggler navbar-toggler-right text-uppercase bg-secondary text-white rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" data-toggle="modal" data-target="#exampleModalCenter">
+        Help
+      </button>
+    </div>
+    <div class="col-1">
+      <button ng-click="logout()"
+        class="navbar-toggler navbar-toggler-right text-uppercase bg-secondary text-white rounded"
+        aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation"
+        style="background-color: rgb(181, 26, 26) !important;">
         Exit
       </button>
     </div>
@@ -25,7 +33,7 @@
         <input type="number" ng-model="time"/>
       </div>
       <div class="col-3">
-        <label for="range">Radio: </label>
+        <label for="range">Radius: </label>
         <input type="number" ng-model="radio" ng-change="updateRadius()"/>
       </div>
       <div class="col-3">
@@ -43,3 +51,57 @@
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">About</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h3>MGraph</h3>
+            <p>MGraph is a software that allows the graphication of simulation data of artificially inserted genes in mosquito populations located in different points over a certain space and how the genes spread across these populations.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <p>Each pie chart represents a meta-population of mosquitoes in the space. Each
+              arc contains information of the number of mosquitoes with certain genotype existing
+              in that node during that moment in time.</p>
+              <p class="font-weight-bold">To get more information about a specific node, click on it. If you want to make them bigger, modify the radius value</p>
+          </div>
+          <div class="col-4">
+            <img src="assets/img/nodo.png" alt="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <img src="assets/img/genotypes.png" alt="" width="90%">
+          </div>
+          <div class="col-8">
+            <p>Each arc contains the genotype information of the mosquitoes, it changes
+              over the time as the mosquitoes reproduce and they interact with the other nodes</p>
+              <p>The supported alleles described in the software are:</p>
+              <ul>
+                <li>H: Homing allele (Mosquitoes with the modified genotype)</li>
+                <li>W: Wild allele (Wild mosquitoes)</li>
+                <li>B: Resistant allele</li>
+                <li>R: Resistant allele</li>
+              </ul>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

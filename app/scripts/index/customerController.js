@@ -13,6 +13,8 @@
       $rootScope.data = [];
       $rootScope.mycolors = require('./color.json');
       $scope.clusterNumber = 1;
+      $scope.selectedRow = 0;
+
       var clusterInterval;
 
       $scope.start_app = function() {
@@ -21,6 +23,17 @@
           readCoordinates();
           fillData();
         },5000);
+      }
+
+      $scope.generateMatrix = function(){
+        console.log($scope.selectedRow);
+        console.log($rootScope.mycolors[$scope.selectedRow]);
+        var color = randomColor({
+           count: 100,
+           hue: $scope.selectedColor
+        });
+        setTimeout(function(){$rootScope.mycolors[$scope.selectedRow] = color;}, 100);
+        console.log(color);
       }
 
       $scope.getFileDetails = function (e) {

@@ -103,6 +103,7 @@
       		.attr("width", "100%")
       		.attr("height", "100%")
       		.attr("id", function(d,i) {return 'pie'+i;})
+          .style("cursor", "pointer")
       		.append("svg:g")
       			.attr("transform", function(d,i) {
               var s = "translate(";
@@ -113,7 +114,7 @@
               s+=")";
               return s;
             })
-            .on("mouseover", function (d, i) {
+            .on("click", function (d, i) {
                 $scope.selectedPie = i;
             })
             .on("mouseout", function () {
@@ -176,7 +177,7 @@
         }, []);
 
         for( var i = 0; i< result.length; i++){
-          tdata += '<tr><th title="' + alleles + '" scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[$rootScope.clusters[i]][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr></div>';
+          tdata += '<tr><th title="' + alleles + '" scope="row" width="50px" bgcolor="' +  $rootScope.mycolors[0][i] + '">' + $rootScope.headers[i] + '</th><td>' + Math.round(result[i] * 100) / 100 + '</td></tr></div>';
         }
 
         tdata += '</tbody></table>';
@@ -201,6 +202,6 @@
         d3.select("#tooltip")
           .style("opacity", 1);
         getTimePie();
-      }, 500);
+      }, 1000);
     }
 })();
