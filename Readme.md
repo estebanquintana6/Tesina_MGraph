@@ -1,19 +1,32 @@
-# ElectronAngular
+# MGraph
 
-This sample application demonstrate how to create a desktop application using Angular JS and Github Electron.
+This application is used by to graph the output of the landscape module of MGdrivE.
 
-
+### Dependencies
+```
+ In order to make the proyect work, install:
+ 	* NodeJS
+ 	* npm
+ 	* Python3
+ 	* pip
+```
 
 #Install
 ---
 
-Install dependencies.
+Install python dependencies.
+```
+	pip install sklearn
+	pip install numpy
+```
+
+Install dependencies in the root folder.
 
 ```
 	npm install
 ```
 
-Install bower dependencies
+Install bower dependencies in the root folder
 
 ```
 	bower install
